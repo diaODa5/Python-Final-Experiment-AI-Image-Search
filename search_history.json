@@ -1,0 +1,647 @@
+[
+  {
+    "id": "97790e2a08cf45ae8a1963f6869d0aec",
+    "ts": "2026-01-16T19:46:49",
+    "query_name": "222.jpeg",
+    "topk_requested": 60,
+    "topk_returned": 60,
+    "dedup_enabled": true,
+    "duplicates_removed": 32,
+    "gallery_size": 11574,
+    "timing_ms": {
+      "preprocess": 7.13,
+      "embed": 701.05,
+      "search": 2.94,
+      "dedup_filter": 1.62,
+      "total": 715.07
+    },
+    "tiers": [
+      {
+        "name": "Perfect",
+        "size": 6,
+        "score_max": 0.7051964402198792,
+        "score_min": 0.44286343455314636,
+        "avg_score": 0.5852147489786148,
+        "items": [
+          {
+            "score": 0.7051964402198792,
+            "filename": "010762.jpg",
+            "url": "/gallery_images/010762.jpg",
+            "rank": 1
+          },
+          {
+            "score": 0.624909520149231,
+            "filename": "015255.jpg",
+            "url": "/gallery_images/015255.jpg",
+            "rank": 2
+          },
+          {
+            "score": 0.6135621666908264,
+            "filename": "000770.jpg",
+            "url": "/gallery_images/000770.jpg",
+            "rank": 3
+          },
+          {
+            "score": 0.5732109546661377,
+            "filename": "004558.jpg",
+            "url": "/gallery_images/004558.jpg",
+            "rank": 4
+          },
+          {
+            "score": 0.5515459775924683,
+            "filename": "011889.jpg",
+            "url": "/gallery_images/011889.jpg",
+            "rank": 5
+          },
+          {
+            "score": 0.44286343455314636,
+            "filename": "017923.jpg",
+            "url": "/gallery_images/017923.jpg",
+            "rank": 6
+          }
+        ]
+      },
+      {
+        "name": "Excellent",
+        "size": 12,
+        "score_max": 0.4399048984050751,
+        "score_min": 0.34444767236709595,
+        "avg_score": 0.38249043623606366,
+        "items": [
+          {
+            "score": 0.4399048984050751,
+            "filename": "015830.jpg",
+            "url": "/gallery_images/015830.jpg",
+            "rank": 7
+          },
+          {
+            "score": 0.42677468061447144,
+            "filename": "013599.jpg",
+            "url": "/gallery_images/013599.jpg",
+            "rank": 8
+          },
+          {
+            "score": 0.4132794737815857,
+            "filename": "015156.jpg",
+            "url": "/gallery_images/015156.jpg",
+            "rank": 9
+          },
+          {
+            "score": 0.39918044209480286,
+            "filename": "005977.jpg",
+            "url": "/gallery_images/005977.jpg",
+            "rank": 10
+          },
+          {
+            "score": 0.3942021429538727,
+            "filename": "014450.jpg",
+            "url": "/gallery_images/014450.jpg",
+            "rank": 11
+          },
+          {
+            "score": 0.3747374415397644,
+            "filename": "017729.jpg",
+            "url": "/gallery_images/017729.jpg",
+            "rank": 12
+          },
+          {
+            "score": 0.3728439211845398,
+            "filename": "017414.jpg",
+            "url": "/gallery_images/017414.jpg",
+            "rank": 13
+          },
+          {
+            "score": 0.3720397651195526,
+            "filename": "015117.jpg",
+            "url": "/gallery_images/015117.jpg",
+            "rank": 14
+          },
+          {
+            "score": 0.3616412281990051,
+            "filename": "004059.jpg",
+            "url": "/gallery_images/004059.jpg",
+            "rank": 15
+          },
+          {
+            "score": 0.345720112323761,
+            "filename": "012519.jpg",
+            "url": "/gallery_images/012519.jpg",
+            "rank": 16
+          },
+          {
+            "score": 0.34511345624923706,
+            "filename": "016657.jpg",
+            "url": "/gallery_images/016657.jpg",
+            "rank": 17
+          },
+          {
+            "score": 0.34444767236709595,
+            "filename": "015653.jpg",
+            "url": "/gallery_images/015653.jpg",
+            "rank": 18
+          }
+        ]
+      },
+      {
+        "name": "Good",
+        "size": 18,
+        "score_max": 0.3386877179145813,
+        "score_min": 0.27556341886520386,
+        "avg_score": 0.3017221341530482,
+        "items": [
+          {
+            "score": 0.3386877179145813,
+            "filename": "013452.jpg",
+            "url": "/gallery_images/013452.jpg",
+            "rank": 19
+          },
+          {
+            "score": 0.3385799825191498,
+            "filename": "004187.jpg",
+            "url": "/gallery_images/004187.jpg",
+            "rank": 20
+          },
+          {
+            "score": 0.3384222090244293,
+            "filename": "003785.jpg",
+            "url": "/gallery_images/003785.jpg",
+            "rank": 21
+          },
+          {
+            "score": 0.3235893249511719,
+            "filename": "000436.jpg",
+            "url": "/gallery_images/000436.jpg",
+            "rank": 22
+          },
+          {
+            "score": 0.3205602765083313,
+            "filename": "012306.jpg",
+            "url": "/gallery_images/012306.jpg",
+            "rank": 23
+          },
+          {
+            "score": 0.3146650791168213,
+            "filename": "015827.jpg",
+            "url": "/gallery_images/015827.jpg",
+            "rank": 24
+          },
+          {
+            "score": 0.31249886751174927,
+            "filename": "015355.jpg",
+            "url": "/gallery_images/015355.jpg",
+            "rank": 25
+          },
+          {
+            "score": 0.30520331859588623,
+            "filename": "015497.jpg",
+            "url": "/gallery_images/015497.jpg",
+            "rank": 26
+          },
+          {
+            "score": 0.3046211898326874,
+            "filename": "009534.jpg",
+            "url": "/gallery_images/009534.jpg",
+            "rank": 27
+          },
+          {
+            "score": 0.2902405858039856,
+            "filename": "012072.jpg",
+            "url": "/gallery_images/012072.jpg",
+            "rank": 28
+          },
+          {
+            "score": 0.2871556878089905,
+            "filename": "011656.jpg",
+            "url": "/gallery_images/011656.jpg",
+            "rank": 29
+          },
+          {
+            "score": 0.28427207469940186,
+            "filename": "005512.jpg",
+            "url": "/gallery_images/005512.jpg",
+            "rank": 30
+          },
+          {
+            "score": 0.28181520104408264,
+            "filename": "001732.jpg",
+            "url": "/gallery_images/001732.jpg",
+            "rank": 31
+          },
+          {
+            "score": 0.2808430790901184,
+            "filename": "010921.jpg",
+            "url": "/gallery_images/010921.jpg",
+            "rank": 32
+          },
+          {
+            "score": 0.2792368531227112,
+            "filename": "003672.jpg",
+            "url": "/gallery_images/003672.jpg",
+            "rank": 33
+          },
+          {
+            "score": 0.27860227227211,
+            "filename": "014283.jpg",
+            "url": "/gallery_images/014283.jpg",
+            "rank": 34
+          },
+          {
+            "score": 0.2764412760734558,
+            "filename": "009202.jpg",
+            "url": "/gallery_images/009202.jpg",
+            "rank": 35
+          },
+          {
+            "score": 0.27556341886520386,
+            "filename": "012311.jpg",
+            "url": "/gallery_images/012311.jpg",
+            "rank": 36
+          }
+        ]
+      },
+      {
+        "name": "Just-so-so",
+        "size": 24,
+        "score_max": 0.2700141370296478,
+        "score_min": 0.22380255162715912,
+        "avg_score": 0.24479594019552073,
+        "items": [
+          {
+            "score": 0.2700141370296478,
+            "filename": "017598.jpg",
+            "url": "/gallery_images/017598.jpg",
+            "rank": 37
+          },
+          {
+            "score": 0.2679407596588135,
+            "filename": "013558.jpg",
+            "url": "/gallery_images/013558.jpg",
+            "rank": 38
+          },
+          {
+            "score": 0.26225948333740234,
+            "filename": "008440.jpg",
+            "url": "/gallery_images/008440.jpg",
+            "rank": 39
+          },
+          {
+            "score": 0.2600916624069214,
+            "filename": "010715.jpg",
+            "url": "/gallery_images/010715.jpg",
+            "rank": 40
+          },
+          {
+            "score": 0.2559129297733307,
+            "filename": "015240.jpg",
+            "url": "/gallery_images/015240.jpg",
+            "rank": 41
+          },
+          {
+            "score": 0.2552889287471771,
+            "filename": "008087.jpg",
+            "url": "/gallery_images/008087.jpg",
+            "rank": 42
+          },
+          {
+            "score": 0.2522442936897278,
+            "filename": "009373.jpg",
+            "url": "/gallery_images/009373.jpg",
+            "rank": 43
+          },
+          {
+            "score": 0.2510979473590851,
+            "filename": "016176.jpg",
+            "url": "/gallery_images/016176.jpg",
+            "rank": 44
+          },
+          {
+            "score": 0.25072866678237915,
+            "filename": "001191.jpg",
+            "url": "/gallery_images/001191.jpg",
+            "rank": 45
+          },
+          {
+            "score": 0.24868974089622498,
+            "filename": "002790.jpg",
+            "url": "/gallery_images/002790.jpg",
+            "rank": 46
+          },
+          {
+            "score": 0.24645176529884338,
+            "filename": "013639.jpg",
+            "url": "/gallery_images/013639.jpg",
+            "rank": 47
+          },
+          {
+            "score": 0.24362827837467194,
+            "filename": "010039.jpg",
+            "url": "/gallery_images/010039.jpg",
+            "rank": 48
+          },
+          {
+            "score": 0.2434118390083313,
+            "filename": "015553.jpg",
+            "url": "/gallery_images/015553.jpg",
+            "rank": 49
+          },
+          {
+            "score": 0.24200937151908875,
+            "filename": "011373.jpg",
+            "url": "/gallery_images/011373.jpg",
+            "rank": 50
+          },
+          {
+            "score": 0.23879915475845337,
+            "filename": "012488.jpg",
+            "url": "/gallery_images/012488.jpg",
+            "rank": 51
+          },
+          {
+            "score": 0.23740489780902863,
+            "filename": "004124.jpg",
+            "url": "/gallery_images/004124.jpg",
+            "rank": 52
+          },
+          {
+            "score": 0.2348262071609497,
+            "filename": "014930.jpg",
+            "url": "/gallery_images/014930.jpg",
+            "rank": 53
+          },
+          {
+            "score": 0.2344300001859665,
+            "filename": "015909.jpg",
+            "url": "/gallery_images/015909.jpg",
+            "rank": 54
+          },
+          {
+            "score": 0.23368880152702332,
+            "filename": "006860.jpg",
+            "url": "/gallery_images/006860.jpg",
+            "rank": 55
+          },
+          {
+            "score": 0.23188310861587524,
+            "filename": "009079.jpg",
+            "url": "/gallery_images/009079.jpg",
+            "rank": 56
+          },
+          {
+            "score": 0.23115485906600952,
+            "filename": "012579.jpg",
+            "url": "/gallery_images/012579.jpg",
+            "rank": 57
+          },
+          {
+            "score": 0.22967979311943054,
+            "filename": "011324.jpg",
+            "url": "/gallery_images/011324.jpg",
+            "rank": 58
+          },
+          {
+            "score": 0.22966338694095612,
+            "filename": "005260.jpg",
+            "url": "/gallery_images/005260.jpg",
+            "rank": 59
+          },
+          {
+            "score": 0.22380255162715912,
+            "filename": "002715.jpg",
+            "url": "/gallery_images/002715.jpg",
+            "rank": 60
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2db1950ffeb5428792c6154cf1e22b21",
+    "ts": "2026-01-16T19:46:42",
+    "query_name": "222.jpeg",
+    "topk_requested": 10,
+    "topk_returned": 10,
+    "dedup_enabled": true,
+    "duplicates_removed": 6,
+    "gallery_size": 11574,
+    "timing_ms": {
+      "preprocess": 8.9,
+      "embed": 786.63,
+      "search": 1.17,
+      "dedup_filter": 0.2,
+      "total": 798.9
+    },
+    "tiers": [
+      {
+        "name": "Perfect",
+        "size": 1,
+        "score_max": 0.7051964402198792,
+        "score_min": 0.7051964402198792,
+        "avg_score": 0.7051964402198792,
+        "items": [
+          {
+            "score": 0.7051964402198792,
+            "filename": "010762.jpg",
+            "url": "/gallery_images/010762.jpg",
+            "rank": 1
+          }
+        ]
+      },
+      {
+        "name": "Excellent",
+        "size": 2,
+        "score_max": 0.624909520149231,
+        "score_min": 0.6135621666908264,
+        "avg_score": 0.6192358434200287,
+        "items": [
+          {
+            "score": 0.624909520149231,
+            "filename": "015255.jpg",
+            "url": "/gallery_images/015255.jpg",
+            "rank": 2
+          },
+          {
+            "score": 0.6135621666908264,
+            "filename": "004550.jpg",
+            "url": "/gallery_images/004550.jpg",
+            "rank": 3
+          }
+        ]
+      },
+      {
+        "name": "Good",
+        "size": 3,
+        "score_max": 0.5732109546661377,
+        "score_min": 0.44286343455314636,
+        "avg_score": 0.5225401222705841,
+        "items": [
+          {
+            "score": 0.5732109546661377,
+            "filename": "004558.jpg",
+            "url": "/gallery_images/004558.jpg",
+            "rank": 4
+          },
+          {
+            "score": 0.5515459775924683,
+            "filename": "011889.jpg",
+            "url": "/gallery_images/011889.jpg",
+            "rank": 5
+          },
+          {
+            "score": 0.44286343455314636,
+            "filename": "017923.jpg",
+            "url": "/gallery_images/017923.jpg",
+            "rank": 6
+          }
+        ]
+      },
+      {
+        "name": "Just-so-so",
+        "size": 4,
+        "score_max": 0.4399048984050751,
+        "score_min": 0.39918044209480286,
+        "avg_score": 0.41978487372398376,
+        "items": [
+          {
+            "score": 0.4399048984050751,
+            "filename": "015830.jpg",
+            "url": "/gallery_images/015830.jpg",
+            "rank": 7
+          },
+          {
+            "score": 0.42677468061447144,
+            "filename": "013599.jpg",
+            "url": "/gallery_images/013599.jpg",
+            "rank": 8
+          },
+          {
+            "score": 0.4132794737815857,
+            "filename": "015156.jpg",
+            "url": "/gallery_images/015156.jpg",
+            "rank": 9
+          },
+          {
+            "score": 0.39918044209480286,
+            "filename": "009446.jpg",
+            "url": "/gallery_images/009446.jpg",
+            "rank": 10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "d370b8255f524c41aadef96e754c491c",
+    "ts": "2026-01-16T19:46:31",
+    "query_name": "111.jpeg",
+    "topk_requested": 10,
+    "topk_returned": 10,
+    "dedup_enabled": true,
+    "duplicates_removed": 2,
+    "gallery_size": 11574,
+    "timing_ms": {
+      "preprocess": 7.19,
+      "embed": 770.84,
+      "search": 6.2,
+      "dedup_filter": 0.15,
+      "total": 786.04
+    },
+    "tiers": [
+      {
+        "name": "Perfect",
+        "size": 1,
+        "score_max": 0.7759934663772583,
+        "score_min": 0.7759934663772583,
+        "avg_score": 0.7759934663772583,
+        "items": [
+          {
+            "score": 0.7759934663772583,
+            "filename": "006169.jpg",
+            "url": "/gallery_images/006169.jpg",
+            "rank": 1
+          }
+        ]
+      },
+      {
+        "name": "Excellent",
+        "size": 2,
+        "score_max": 0.5040501356124878,
+        "score_min": 0.3670263886451721,
+        "avg_score": 0.43553826212882996,
+        "items": [
+          {
+            "score": 0.5040501356124878,
+            "filename": "015202.jpg",
+            "url": "/gallery_images/015202.jpg",
+            "rank": 2
+          },
+          {
+            "score": 0.3670263886451721,
+            "filename": "016411.jpg",
+            "url": "/gallery_images/016411.jpg",
+            "rank": 3
+          }
+        ]
+      },
+      {
+        "name": "Good",
+        "size": 3,
+        "score_max": 0.350584477186203,
+        "score_min": 0.2853505611419678,
+        "avg_score": 0.31963348388671875,
+        "items": [
+          {
+            "score": 0.350584477186203,
+            "filename": "017096.jpg",
+            "url": "/gallery_images/017096.jpg",
+            "rank": 4
+          },
+          {
+            "score": 0.3229654133319855,
+            "filename": "012179.jpg",
+            "url": "/gallery_images/012179.jpg",
+            "rank": 5
+          },
+          {
+            "score": 0.2853505611419678,
+            "filename": "014444.jpg",
+            "url": "/gallery_images/014444.jpg",
+            "rank": 6
+          }
+        ]
+      },
+      {
+        "name": "Just-so-so",
+        "size": 4,
+        "score_max": 0.26758044958114624,
+        "score_min": 0.2184927761554718,
+        "avg_score": 0.24177730083465576,
+        "items": [
+          {
+            "score": 0.26758044958114624,
+            "filename": "016218.jpg",
+            "url": "/gallery_images/016218.jpg",
+            "rank": 7
+          },
+          {
+            "score": 0.24341899156570435,
+            "filename": "015498.jpg",
+            "url": "/gallery_images/015498.jpg",
+            "rank": 8
+          },
+          {
+            "score": 0.23761698603630066,
+            "filename": "012025.jpg",
+            "url": "/gallery_images/012025.jpg",
+            "rank": 9
+          },
+          {
+            "score": 0.2184927761554718,
+            "filename": "002776.jpg",
+            "url": "/gallery_images/002776.jpg",
+            "rank": 10
+          }
+        ]
+      }
+    ]
+  }
+]

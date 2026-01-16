@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VistaMatch · AI Image Search</title>
+  <style>
+    :root{
+      --bg:#070a15; --panel:#0f1730; --panel2:#0c1226; --txt:#e9eeff; --muted:#a8b1d6;
+      --brand:#7c5cff; --brand2:#22d3ee; --ok:#34d399; --err:#fb7185; --warn:#fbbf24;
+      --shadow: 0 22px 70px rgba(0,0,0,.45); --r:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(1100px 520px at 15% 10%, rgba(124,92,255,.28), transparent 58%),
+        radial-gradient(900px 520px at 92% 18%, rgba(34,211,238,.20), transparent 60%),
+        radial-gradient(900px 700px at 40% 95%, rgba(52,211,153,.10), transparent 55%),
+        var(--bg);
+      color:var(--txt); overflow-x:hidden;
+    }
+    .glow{position:fixed;inset:-220px;background:conic-gradient(from 120deg,rgba(124,92,255,.18),rgba(34,211,238,.14),rgba(52,211,153,.10),rgba(124,92,255,.18));filter:blur(92px);opacity:.55;animation:spin 14s linear infinite;pointer-events:none;z-index:-1;}
+    @keyframes spin { to { transform: rotate(360deg);} }
+    .wrap{max-width:1260px;margin:0 auto;padding:26px 18px 64px}
+    header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;}
+    .title h1{margin:0;font-size:28px;letter-spacing:.2px}
+    .title p{margin:8px 0 0;color:var(--muted);line-height:1.55}
+    .badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg, rgba(124,92,255,.22), rgba(34,211,238,.14));border:1px solid rgba(255,255,255,.10);padding:9px 12px;border-radius:999px;color:var(--muted);font-size:13px;box-shadow:0 12px 34px rgba(0,0,0,.22);white-space:nowrap;backdrop-filter: blur(10px);}
+    .dot{width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.25)}
+    .dot.ok{background:var(--ok)} .dot.err{background:var(--err)}
+    .grid{display:grid;grid-template-columns: 1.05fr .95fr;gap:16px;}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}}
+    .card{background: linear-gradient(180deg, rgba(15,23,48,.92), rgba(10,14,30,.92));border:1px solid rgba(255,255,255,.10);border-radius: var(--r);box-shadow: var(--shadow);overflow:hidden;backdrop-filter: blur(10px);}
+    .hd{padding:14px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid rgba(255,255,255,.08);}
+    .bd{padding:14px}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .btn{border:0;padding:10px 12px;border-radius:12px;background: linear-gradient(135deg, rgba(124,92,255,1), rgba(34,211,238,1));color:white;font-weight:800;cursor:pointer;box-shadow: 0 14px 34px rgba(124,92,255,.22);transition: transform .15s ease, filter .15s ease;}
+    .btn:hover{transform: translateY(-1px); filter: brightness(1.03)}
+    .btn.secondary{background: rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);box-shadow:none;font-weight:700}
+    .drop{border:1.5px dashed rgba(255,255,255,.22);border-radius:16px;background: linear-gradient(180deg, rgba(124,92,255,.08), rgba(34,211,238,.05));padding:18px;display:flex;gap:14px;align-items:center;justify-content:space-between;cursor:pointer;transition: border-color .18s ease, transform .18s ease;}
+    .drop:hover{border-color: rgba(34,211,238,.35); transform: translateY(-1px)}
+    .preview{display:flex;gap:12px;align-items:center;margin-top:14px}
+    .thumb{width:86px;height:86px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background: rgba(255,255,255,.04);flex:0 0 auto;position:relative;}
+    .thumb.has::after{content:"";position:absolute;inset:-40%;background: radial-gradient(circle, rgba(34,211,238,.18), transparent 55%);animation:pulse 2.4s ease-in-out infinite;opacity:1;}
+    @keyframes pulse{0%,100%{transform:scale(.96);opacity:0}40%{opacity:.25}70%{opacity:.08}}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .status{font-size:13px;color:var(--muted)}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);padding:8px 10px;border-radius:999px;font-size:13px;color:var(--muted)}
+    .pill strong{color:var(--txt)}
+    input[type="range"]{width:100%}
+    .results{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+    .tier{border-radius: var(--r);background: rgba(12,18,38,.88);border:1px solid rgba(255,255,255,.10);overflow:hidden;transform: translateY(8px);opacity:0;animation: tierIn .35s ease forwards;}
+    @keyframes tierIn{to{transform: translateY(0); opacity:1}}
+    .th{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.08);}
+    .tierName{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .tag{padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background: rgba(255,255,255,.06);color: var(--muted);font-size:12px;}
+    .tag.perfect{border-color: rgba(52,211,153,.35)}
+    .tag.excellent{border-color: rgba(34,211,238,.35)}
+    .tag.good{border-color: rgba(124,92,255,.35)}
+    .tag.soso{border-color: rgba(251,191,36,.35)}
+    .imggrid{display:grid;grid-template-columns:repeat(5, minmax(0, 1fr));gap:10px;padding:12px 14px;}
+    @media (max-width:1100px){.imggrid{grid-template-columns:repeat(4, minmax(0, 1fr));}}
+    @media (max-width:840px){.imggrid{grid-template-columns:repeat(3, minmax(0, 1fr));}}
+    @media (max-width:540px){.imggrid{grid-template-columns:repeat(2, minmax(0, 1fr));}}
+    .tile{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.10);background: rgba(255,255,255,.04);min-height:140px;transform: translateY(8px);opacity:0;animation: tileIn .28s ease forwards;}
+    @keyframes tileIn{to{transform: translateY(0); opacity:1}}
+    .tile img{width:100%;height:100%;object-fit:cover;display:block;transition: transform .18s ease}
+    .tile:hover img{transform: scale(1.035)}
+    .overlay{position:absolute;left:0;right:0;bottom:0;padding:10px;background: linear-gradient(180deg, transparent, rgba(0,0,0,.70));display:flex;align-items:flex-end;justify-content:space-between;gap:10px;}
+    .overlay b{font-size:12px}
+    .overlay .score{font-size:12px;padding:6px 8px;border-radius:999px;background: rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);white-space:nowrap;}
+    .toggle{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background: rgba(255,255,255,.06);color:var(--muted);font-size:13px;user-select:none;}
+    .toggle input{accent-color: var(--brand2)}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;background: rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}
+    .modal.on{display:flex}
+    .modalCard{max-width:920px;width:min(920px, 100%);background: rgba(12,18,38,.92);border:1px solid rgba(255,255,255,.12);border-radius: 22px;box-shadow: 0 30px 90px rgba(0,0,0,.6);overflow:hidden;backdrop-filter: blur(12px);transform: translateY(10px);animation: pop .18s ease forwards;}
+    @keyframes pop{to{transform: translateY(0)}}
+    .modalTop{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .x{cursor:pointer;border:1px solid rgba(255,255,255,.14);background: rgba(255,255,255,.06);color:var(--txt);border-radius:12px;padding:8px 10px;font-weight:800}
+    .modalImg{width:100%;height:min(68vh, 620px);background:#000}
+    .modalImg img{width:100%;height:100%;object-fit:contain;display:block}
+
+    /* History drawer */
+    .drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px, 92vw);background: rgba(12,18,38,.92);border-left:1px solid rgba(255,255,255,.12);box-shadow:-20px 0 80px rgba(0,0,0,.55);backdrop-filter: blur(12px);transform: translateX(105%);transition: transform .22s ease;z-index:60;display:flex;flex-direction:column;}
+    .drawer.on{transform: translateX(0)}
+    .drawerTop{padding:14px;border-bottom:1px solid rgba(255,255,255,.10);display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .drawerBody{padding:14px;overflow:auto;display:flex;flex-direction:column;gap:10px}
+    .hitem{border:1px solid rgba(255,255,255,.12);background: rgba(255,255,255,.05);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition: transform .15s ease, border-color .15s ease;}
+    .hitem:hover{transform: translateY(-1px);border-color: rgba(34,211,238,.25)}
+    .hrow{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+<div class="glow"></div>
+
+<div class="wrap">
+  <header>
+    <div class="title">
+      <h1><span style="color:var(--brand2)">VistaMatch</span> · AI Image Search</h1>
+      <p>上传图片 → 抽取 DINOv2 特征 → Top-K 检索 → 相似度分档（Perfect / Excellent / Good / Just-so-so）展示。支持历史记录回放。</p>
+    </div>
+    <div class="badge" id="badge"><span class="dot err" id="dot"></span><span id="badgeText">后端未连接</span></div>
+  </header>
+
+  <div class="grid">
+    <!-- Left -->
+    <div class="card">
+      <div class="hd">
+        <div><b>Query</b></div>
+        <div class="row">
+          <button class="btn secondary" id="btnClear">清空</button>
+          <button class="btn" id="btnSearch">开始检索</button>
+        </div>
+      </div>
+
+      <div class="bd">
+        <div class="drop" id="drop">
+          <div>
+            <b>拖拽图片到这里</b><br/>
+            <span class="muted" style="font-size:13px">或点击选择文件（JPG/PNG/WebP…）</span>
+          </div>
+          <button class="btn secondary" id="btnPick">选择图片</button>
+          <input type="file" id="file" accept="image/*" style="display:none"/>
+        </div>
+
+        <div class="preview">
+          <div class="thumb" id="thumb"></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="status" id="status">尚未选择图片</div>
+            <div class="row">
+              <span class="pill" id="pillTopk">Top-K: 50</span>
+              <label class="toggle" title="去掉重复图（同文件名 + 近重复特征）">
+                <input type="checkbox" id="dedup" checked />
+                去重
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <div class="muted" style="font-size:13px;display:flex;justify-content:space-between">
+            <span>Top-K</span><span id="vTopk">50</span>
+          </div>
+          <input type="range" id="topk" min="10" max="100" value="50" step="5"/>
+        </div>
+
+        <div style="margin-top:12px" class="row">
+          <span class="pill">图库规模：<strong id="gallerySize">-</strong></span>
+          <span class="pill">耗时(ms)：<strong id="timing">-</strong></span>
+          <span class="pill">去重移除：<strong id="dedupRemoved">-</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="card">
+      <div class="hd">
+        <div><b>Results</b></div>
+        <div class="row">
+          <button class="btn secondary" id="btnHistory">History</button>
+          <span class="pill" id="summary">等待检索…</span>
+        </div>
+      </div>
+      <div class="bd">
+        <div id="results" class="results"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal preview -->
+<div class="modal" id="modal">
+  <div class="modalCard">
+    <div class="modalTop">
+      <div>
+        <b id="mTitle">Preview</b>
+        <div class="muted" style="font-size:12px;margin-top:4px" id="mSub">—</div>
+      </div>
+      <button class="x" id="mClose">关闭</button>
+    </div>
+    <div class="modalImg"><img id="mImg" src="" alt="preview"/></div>
+  </div>
+</div>
+
+<!-- History drawer -->
+<div class="drawer" id="drawer">
+  <div class="drawerTop">
+    <div>
+      <b>Search History</b>
+      <div class="muted" style="font-size:12px;margin-top:4px" id="hMeta">—</div>
+    </div>
+    <div class="row">
+      <button class="btn secondary" id="btnClearHistory">清空历史</button>
+      <button class="x" id="btnCloseDrawer">关闭</button>
+    </div>
+  </div>
+  <div class="drawerBody" id="hList"></div>
+</div>
+
+<script>
+  const el = (id)=>document.getElementById(id);
+
+  const fileInput = el("file");
+  const drop = el("drop");
+  const btnPick = el("btnPick");
+  const btnSearch = el("btnSearch");
+  const btnClear = el("btnClear");
+  const btnHistory = el("btnHistory");
+
+  const status = el("status");
+  const thumb = el("thumb");
+
+  const topk = el("topk");
+  const vTopk = el("vTopk");
+  const pillTopk = el("pillTopk");
+
+  const results = el("results");
+  const summary = el("summary");
+
+  const badgeText = el("badgeText");
+  const dot = el("dot");
+
+  const gallerySize = el("gallerySize");
+  const timing = el("timing");
+  const dedupRemoved = el("dedupRemoved");
+  const dedup = el("dedup");
+
+  const modal = el("modal");
+  const mImg = el("mImg");
+  const mTitle = el("mTitle");
+  const mSub = el("mSub");
+  const mClose = el("mClose");
+
+  const drawer = el("drawer");
+  const hList = el("hList");
+  const hMeta = el("hMeta");
+  const btnCloseDrawer = el("btnCloseDrawer");
+  const btnClearHistory = el("btnClearHistory");
+
+  let selectedFile=null, selectedUrl=null;
+
+  function setBackend(ok){
+    if(ok){
+      dot.className = "dot ok";
+      badgeText.textContent = "后端已连接";
+    }else{
+      dot.className = "dot err";
+      badgeText.textContent = "后端未连接";
+    }
+  }
+
+  function sync(){
+    vTopk.textContent = topk.value;
+    pillTopk.textContent = `Top-K: ${topk.value}`;
+  }
+  sync();
+  topk.addEventListener("input", sync);
+
+  function setPreview(file){
+    if (selectedUrl) URL.revokeObjectURL(selectedUrl);
+    selectedFile = file;
+    selectedUrl = URL.createObjectURL(file);
+    thumb.classList.add("has");
+    thumb.innerHTML = `<img src="${selectedUrl}" alt="query"/>`;
+    status.textContent = `已选择：${file.name}`;
+    status.style.color = "var(--muted)";
+  }
+
+  function reset(){
+    if (selectedUrl) URL.revokeObjectURL(selectedUrl);
+    selectedFile=null; selectedUrl=null;
+    thumb.classList.remove("has");
+    thumb.innerHTML = "";
+    status.textContent = "尚未选择图片";
+    status.style.color = "var(--muted)";
+    results.innerHTML = "";
+    summary.textContent = "等待检索…";
+    gallerySize.textContent = "-";
+    timing.textContent = "-";
+    dedupRemoved.textContent = "-";
+  }
+
+  // drag & drop
+  drop.addEventListener("dragover", (e)=>{e.preventDefault();});
+  drop.addEventListener("drop", (e)=>{
+    e.preventDefault();
+    const f = e.dataTransfer.files?.[0];
+    if (f) setPreview(f);
+  });
+
+  drop.addEventListener("click", ()=>fileInput.click());
+  btnPick.addEventListener("click", (e)=>{e.stopPropagation(); fileInput.click();});
+  fileInput.addEventListener("change", ()=>{ if(fileInput.files?.length) setPreview(fileInput.files[0]); });
+
+  btnClear.addEventListener("click", reset);
+
+  function tierClass(name){
+    const n = (name||"").toLowerCase();
+    if(n.includes("perfect")) return "perfect";
+    if(n.includes("excellent")) return "excellent";
+    if(n.includes("good")) return "good";
+    return "soso";
+  }
+
+  function openModal(it){
+    mImg.src = it.url;
+    mTitle.textContent = `${it.filename}`;
+    mSub.textContent = `Rank #${String(it.rank).padStart(2,"0")} · score ${Number(it.score).toFixed(4)}`;
+    modal.classList.add("on");
+  }
+  function closeModal(){
+    modal.classList.remove("on");
+    mImg.src = "";
+  }
+  modal.addEventListener("click", (e)=>{ if(e.target === modal) closeModal(); });
+  mClose.addEventListener("click", closeModal);
+
+  function renderFromPayload(payload, fromHistory=false){
+    results.innerHTML = "";
+
+    summary.textContent = fromHistory
+      ? `已从历史记录加载 · 返回 ${payload.topk_returned}/${payload.topk_requested}`
+      : `返回 ${payload.topk_returned}/${payload.topk_requested}`;
+
+    gallerySize.textContent = Number(payload.gallery_size).toLocaleString();
+    timing.textContent = payload.timing_ms.total;
+    dedupRemoved.textContent = payload.duplicates_removed;
+
+    const tiers = payload.tiers || [];
+    tiers.forEach((t, tidx)=>{
+      const box = document.createElement("div");
+      box.className = "tier";
+      box.style.animationDelay = `${Math.min(tidx*60, 220)}ms`;
+
+      const cls = tierClass(t.name);
+      const rangeTxt =
+        (t.score_max==null) ? "—" :
+        `${Number(t.score_min).toFixed(4)} ~ ${Number(t.score_max).toFixed(4)} · avg ${Number(t.avg_score).toFixed(4)}`;
+
+      box.innerHTML = `
+        <div class="th">
+          <div class="tierName">
+            <b>${t.name}</b>
+            <span class="tag ${cls}">${t.size} 张</span>
+            <span class="muted" style="font-size:13px">${rangeTxt}</span>
+          </div>
+          <span class="tag ${cls}">Similarity Tier</span>
+        </div>
+        <div class="imggrid"></div>
+      `;
+
+      const grid = box.querySelector(".imggrid");
+      (t.items || []).forEach((it, i)=>{
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        tile.style.animationDelay = `${Math.min(i*22, 240)}ms`;
+        tile.innerHTML = `
+          <img loading="lazy" src="${it.url}" alt="${it.filename}"/>
+          <div class="overlay">
+            <div><b>#${String(it.rank).padStart(2,"0")}</b></div>
+            <div class="score">${Number(it.score).toFixed(4)}</div>
+          </div>
+        `;
+        tile.addEventListener("click", ()=>openModal(it));
+        grid.appendChild(tile);
+      });
+
+      results.appendChild(box);
+    });
+
+    setBackend(true);
+  }
+
+  async function search(){
+    if(!selectedFile){
+      status.style.color="var(--err)";
+      status.textContent="请先选择一张图片";
+      return;
+    }
+
+    summary.textContent="检索中…";
+    results.innerHTML = `<div class="pill">正在检索，请稍候…</div>`;
+
+    const fd = new FormData();
+    fd.append("image", selectedFile);
+
+    const url = `/api/search?topk=${encodeURIComponent(topk.value)}&dedup=${encodeURIComponent(dedup.checked)}`;
+
+    try{
+      const res = await fetch(url, {method:"POST", body: fd});
+      const data = await res.json();
+      if(!data.ok){
+        setBackend(false);
+        results.innerHTML = `<div class="pill" style="border-color:rgba(251,113,133,.4);color:var(--err)">错误：${data.error}</div>`;
+        summary.textContent="检索失败";
+      }else{
+        renderFromPayload(data, false);
+      }
+    }catch(e){
+      setBackend(false);
+      summary.textContent="请求失败";
+      results.innerHTML = `<div class="pill" style="border-color:rgba(251,113,133,.4);color:var(--err)">网络错误：${e}</div>`;
+    }
+  }
+  btnSearch.addEventListener("click", search);
+
+  // History
+  function openDrawer(){ drawer.classList.add("on"); }
+  function closeDrawer(){ drawer.classList.remove("on"); }
+
+  btnHistory.addEventListener("click", async ()=>{
+    openDrawer();
+    hList.innerHTML = `<div class="pill">加载历史记录中…</div>`;
+    try{
+      const res = await fetch(`/api/history?limit=100`);
+      const data = await res.json();
+      if(!data.ok){ throw new Error("history api failed"); }
+
+      hMeta.textContent = `共 ${data.total} 条（显示最近 ${data.items.length} 条）`;
+      if(data.items.length === 0){
+        hList.innerHTML = `<div class="pill">暂无历史记录（你先检索一次就会产生记录）</div>`;
+        return;
+      }
+
+      hList.innerHTML = "";
+      data.items.forEach((it)=>{
+        const div = document.createElement("div");
+        div.className = "hitem";
+        div.innerHTML = `
+          <div class="hrow">
+            <div><b>${it.query_name}</b></div>
+            <div class="muted" style="font-size:12px">${it.ts}</div>
+          </div>
+          <div class="hrow muted" style="font-size:13px">
+            <div>TopK: ${it.topk_returned}/${it.topk_requested}</div>
+            <div>Dedup removed: ${it.duplicates_removed}</div>
+            <div>Total: ${it.timing_ms?.total ?? "-"} ms</div>
+          </div>
+          <div class="hrow">
+            <span class="pill">图库：<strong>${Number(it.gallery_size).toLocaleString()}</strong></span>
+            <span class="pill">去重：<strong>${it.dedup_enabled ? "ON" : "OFF"}</strong></span>
+          </div>
+        `;
+        div.addEventListener("click", ()=>{
+          // 回放
+          const payload = {
+            ok: true,
+            project: "VistaMatch",
+            topk_requested: it.topk_requested,
+            topk_returned: it.topk_returned,
+            duplicates_removed: it.duplicates_removed,
+            timing_ms: it.timing_ms,
+            gallery_size: it.gallery_size,
+            tiers: it.tiers,
+          };
+          renderFromPayload(payload, true);
+          closeDrawer();
+        });
+        hList.appendChild(div);
+      });
+
+      setBackend(true);
+    }catch(e){
+      setBackend(false);
+      hList.innerHTML = `<div class="pill" style="border-color:rgba(251,113,133,.4);color:var(--err)">加载历史失败：${e}</div>`;
+    }
+  });
+
+  btnCloseDrawer.addEventListener("click", closeDrawer);
+
+  btnClearHistory.addEventListener("click", async ()=>{
+    if(!confirm("确定要清空所有历史记录吗？")) return;
+    try{
+      const res = await fetch("/api/history/clear", {method:"POST"});
+      const data = await res.json();
+      if(!data.ok) throw new Error("clear failed");
+      hList.innerHTML = `<div class="pill">已清空历史记录</div>`;
+      hMeta.textContent = "—";
+      setBackend(true);
+    }catch(e){
+      setBackend(false);
+      hList.innerHTML = `<div class="pill" style="border-color:rgba(251,113,133,.4);color:var(--err)">清空失败：${e}</div>`;
+    }
+  });
+
+  setBackend(false);
+</script>
+</body>
+</html>
